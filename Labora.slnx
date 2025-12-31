@@ -1,8 +1,19 @@
 <Solution>
-  <Project Path="Client/Client.csproj" />
-  <Project Path="Labora.ApiService/Labora.ApiService.csproj" />
-  <Project Path="Labora.AppHost/Labora.AppHost.csproj" />
-  <Project Path="Labora.ServiceDefaults/Labora.ServiceDefaults.csproj" />
-  <Project Path="Labora.Tests/Labora.Tests.csproj" />
-  <Project Path="Labora.Web/Labora.Web.csproj" />
+  <Folder Name="/ReadMe Files/" />
+  <Folder Name="/Source/" />
+  <Folder Name="/Source/Aspire/">
+    <Project Path="Labora.AppHost/Labora.AppHost.csproj" />
+    <Project Path="Labora.ServiceDefaults/Labora.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/Source/Tests/">
+    <Project Path="Labora.Tests/Labora.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Source/Web/" />
+  <Folder Name="/Source/Web/Client/">
+    <Project Path="Client/Client.csproj" />
+    <Project Path="Labora.Web/Labora.Web.csproj" />
+  </Folder>
+  <Folder Name="/Source/Web/Server/">
+    <Project Path="Labora.ApiService/Labora.ApiService.csproj" />
+  </Folder>
 </Solution>
