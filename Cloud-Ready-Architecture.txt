@@ -1,0 +1,125 @@
+﻿┌─────────────┐
+│   Frontend  │  (Blazor / Web / Mobile)
+└──────┬──────┘
+       │ HTTP
+┌──────▼──────┐
+│  API .NET   │  ← Stateless
+│ ASP.NET     │
+└──────┬──────┘
+       │
+ ┌─────▼─────┐
+ │ Database  │  (PostgreSQL / SQL)
+ └─────┬─────┘
+       │
+ ┌─────▼────────┐
+ │ Blob Storage │  (imágenes)
+ └─────┬────────┘
+       │
+ ┌─────▼───────────┐
+ │ Queue / Bus     │  (jobs)
+ └─────┬───────────┘
+       │
+ ┌─────▼────────┐
+ │ Background   │  (Azure Function / Worker)
+ └──────────────┘
+
+La api no debe guardar estados, no debe guardar archivos ni debe hacer tareas largas.
+
+Ejemplo 1 Guardado de imagenes:
+
+--------------------
+NO Cloud-Ready:
+
+var path = Path.Combine("wwwroot/uploads", file.FileName);
+using var stream = new FileStream(path, FileMode.Create);
+await file.CopyToAsync(stream);
+
+--------------------
+¿Qué problema tiene?
+
+Si tenés 2 instancias, cada una tiene su propio disco
+
+Si la app reinicia → perdés archivos
+
+No escala
+
+No es confiable en cloud
+
+
+--------------------
+Cloud-Ready
+
+public interface IFileStorage
+{
+    Task<string> UploadAsync(Stream file, string fileName);
+}
+public class BlobStorage : IFileStorage
+{
+    public async Task<string> UploadAsync(Stream file, string fileName)
+    {
+        // subir a Azure Blob / S3
+        return url;
+    }
+}
+
+
+
+Ejemplo 2 - Sesiones en memoria:
+
+services.AddSession();
+
+HttpContext.Session.SetString("userId", userId);
+
+Ejemplo correcto:
+
+// JWT
+Authorization: Bearer <token>
+
+
+
+Ejemplo 3 -- Job largo dentro del request:
+
+[HttpPost("book")]
+public async Task<IActionResult> Book()
+{
+    await SendEmail();
+    await GenerateInvoice();
+    await UpdateCalendar();
+    await NotifyUser();
+
+    return Ok();
+}
+
+
+Cloud-Ready:
+[HttpPost("book")]
+public async Task<IActionResult> Book()
+{
+    await _queue.PublishAsync(new BookingCreatedEvent());
+    return Ok();
+}
+
+public class BookingWorker
+{
+    public async Task Handle(BookingCreatedEvent e)
+    {
+        await SendEmail();
+        await GenerateInvoice();
+        await UpdateCalendar();
+        await NotifyUser();
+    }
+}
+
+
+
+-----Sobre guardar las imagenes-----
+
+Las imagenes guardarlas en wwwroot es una mala practica en el cloud porque siempre van a haber muchas maquinas
+y el disco no es compartido
+
+La solucion debe ser guardarlo en un Storage externo (Blob/S3) o en una base de datos como haciamos en IGift:
+En IGift poniamos en la base de datos una tabla con la ruta y las imagenes estaban guardadas en una carpeta fisica
+Esto es bueno solamente cuando hacemos pruebas locales pero una vez que subamos a produccion debemos cambiar a un Blob/S3
+
+
+-----Sesiones en memoria-----

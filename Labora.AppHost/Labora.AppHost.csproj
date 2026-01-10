@@ -11,8 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Labora.ApiService\Labora.ApiService.csproj" />
+    <ProjectReference Include="..\Identity.API\Identity.API.csproj" />
     <ProjectReference Include="..\Labora.Web\Labora.Web.csproj" />
+    <ProjectReference Include="..\Profesionals.API\Profesionals.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

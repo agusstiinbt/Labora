@@ -1,0 +1,8 @@
+Para hacer logins y recuperos de claves fijarse la siguiente pagina
+
+
+https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-10.0&tabs=visual-studio
+
+Un poco mas abajo de la mitad en la parte de Scaffold register, login...
+
+O sino fijarse los ejemplos de Blazor Hero

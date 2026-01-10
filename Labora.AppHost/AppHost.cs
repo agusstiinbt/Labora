@@ -13,4 +13,10 @@ builder.AddProject<Projects.Labora_Web>("webfrontend")
     .WithReference(apiService)
     .WaitFor(apiService);
 
+builder.AddProject<Projects.Labora_Server_Users>("labora-server-users");
+
+builder.AddProject<Projects.Labora_Server_Authentication>("labora-server-authentication");
+
+builder.AddProject<Projects.Profesionals_API>("profesionals-api");
+
 builder.Build().Run();

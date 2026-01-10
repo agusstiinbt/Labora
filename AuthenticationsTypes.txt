@@ -1,0 +1,72 @@
+﻿En este archivo vamos a ver como autorizar un endpoint segun el tipo de identidad que cumpla un usuario
+
+Con esto nos evitaremos consultar a la base de datos para ver si un usuario tiene un rol o claim determinado, o atributo
+
+1) Role-based authorization
+
+Es una autorizacion basada en el claim ROLE
+
+Ejemplo:
+[Authorize(Roles = "Admin")]
+
+
+Es simple y rapido de implementar, pero es poco expresivo. 
+
+Ejemplos Correctos: Admin, System, Support.
+
+Ejemplos Incorrectos: CanPublishJob,CanEditProfile
+
+
+2) Claims-Based authorization
+
+[Authorize(Policy = "HasVerifiedEmail")]
+
+En el program.cs:
+
+    options.AddPolicy("HasVerifiedEmail", policy =>
+        policy.RequireClaim("email_verified", "true"));
+
+
+Es mas expresivo que roles, y esta basado en identidad. Pero se vuelve caotico si crece
+
+Ejemplos correctos: HasVerifiedEmail, CanAccessPremiumContent, EdadMinima
+
+Ejemplos incorrectos: Permisos dinamicos, acciones de negocio, estados temporales
+
+
+
+3) Policy-Based authorization
+
+Abstraccion declarativa que puede usar: Claims, Roles, DB, Contexto, REcursos, Tiempo, o cualquier otro tipo de logica
+
+
+[Authorize(Policy = "CanPublishJob")]
+
+Aqui la policy puede evaluar edad, Role, estado del job, relacion usuario-recurso, reglas de negocio
+
+
+Es muy expresiva y escalable y separa bien las responsabilidades. Ideal apra microservicios.
+
+Lo malo es que requiere mas codigo
+
+
+//Resumen
+
+
+Claims  → datos
+Roles   → tipo especial de claim
+Policy  → reglas que usan claims/roles/DB/etc.
+
+
+
+Un buen ejemplo es la clase MinimumAgeAuthorizationHandler
+
+
+
+
+
+
+
+
+
+

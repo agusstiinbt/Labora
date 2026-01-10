@@ -1,6 +1,17 @@
 <Solution>
-  <Folder Name="/ReadMe Files/" />
-  <Folder Name="/Source/" />
+  <Folder Name="/ReadMe Files/">
+    <File Path="AboutBBDD.txt" />
+    <File Path="AuthenticationsTypes.txt" />
+    <File Path="Cloud-Ready-Architecture.txt" />
+    <File Path="Identity.txt" />
+    <File Path="Migration.txt" />
+    <File Path="QuickReadMe.txt" />
+    <File Path="Readme.Txt" />
+  </Folder>
+  <Folder Name="/Source/">
+    <Project Path="Labora.Application/Labora.Application.csproj" Id="823ea163-bb80-4628-8724-3d439067fbea" />
+    <Project Path="Labora.Infrastructure/Labora.Infrastructure.csproj" Id="8cfba219-25cc-4a7d-acfa-d4b874c2da13" />
+  </Folder>
   <Folder Name="/Source/Aspire/">
     <Project Path="Labora.AppHost/Labora.AppHost.csproj" />
     <Project Path="Labora.ServiceDefaults/Labora.ServiceDefaults.csproj" />
@@ -10,10 +21,15 @@
   </Folder>
   <Folder Name="/Source/Web/" />
   <Folder Name="/Source/Web/Client/">
-    <Project Path="Client/Client.csproj" />
+    <Project Path="Labora.Client/Labora.Client.csproj" />
     <Project Path="Labora.Web/Labora.Web.csproj" />
   </Folder>
-  <Folder Name="/Source/Web/Server/">
-    <Project Path="Labora.ApiService/Labora.ApiService.csproj" />
+  <Folder Name="/Source/Web/Server/" />
+  <Folder Name="/Source/Web/Server/Identity/">
+    <Project Path="Labora.Server.Users/Identity.API.csproj" />
+  </Folder>
+  <Folder Name="/Source/Web/Server/Professionals/">
+    <Project Path="Profesionals.API/Profesionals.API.csproj" />
+    <Project Path="Professionals.Infrastructure/Professionals.Infrastructure.csproj" Id="eb8f8772-cefa-4be1-bc2a-574bc35cfb28" />
   </Folder>
 </Solution>
